@@ -1,25 +1,18 @@
 module.exports = {
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    ecmaVersion: 2020,
-    sourceType: "module",
-    ecmaFeatures: {
-      jsx: true
-    },
-    project: ["./tsconfig.json"],
-    tsconfigRootDir: __dirname
-  },
-  settings: {
-    react: {
-      version: "detect"
-    }
-  },
+  root: true,
+  env: { browser: true, es2020: true },
   extends: [
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-type-checked"
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react-hooks/recommended',
   ],
+  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  parser: '@typescript-eslint/parser',
+  plugins: ['react-refresh'],
   rules: {
-    // Your custom rules here
-  }
-};
+    'react-refresh/only-export-components': [
+      'warn',
+      { allowConstantExport: true },
+    ],
+  },
+}

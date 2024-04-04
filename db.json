@@ -1,3 +1,18 @@
 {
-  "prompts": []
+  "prompts": [
+    {
+      "id": "ScQ8nxdnfQmI2",
+      "title": "Second prompt",
+      "prompt": "Do this, do that!",
+      "createdAt": 1712265724261,
+      "updatedAt": 1712265804598
+    },
+    {
+      "id": "mIyomtUsMNRqE",
+      "title": "First prompt",
+      "prompt": "Do this, do that!",
+      "createdAt": 1712265776874,
+      "updatedAt": 1712265791877
+    }
+  ]
 }
