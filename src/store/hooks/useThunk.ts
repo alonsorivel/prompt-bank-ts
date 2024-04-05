@@ -20,14 +20,14 @@ interface Error {
   message: string;
 }
 
-type ThunkArgs = PromptType | AddPromptType;
+type ThunkArgs = PromptType | AddPromptType | null;
 type ThunkReturn = PromptType | PromptType[];
-type ThunkFunctionArgs<T> = (
+type ThunkFunctionArg<T> = (
   arg: T
 ) => AsyncThunkAction<ThunkReturn, T, Record<string, never>>;
 
 export const useThunk = <T extends ThunkArgs>(
-  thunk: ThunkFunctionArgs<T>
+  thunk: ThunkFunctionArg<T>
 ): [
   (arg: T, events?: EventsModel) => void,
   boolean,
@@ -39,6 +39,8 @@ export const useThunk = <T extends ThunkArgs>(
 
   const runThunk = useCallback(
     (arg: T, events: EventsModel = {}) => {
+      console.log(arg);
+
       // Events model
       const actualEvents: ActualEventsModel = {
         onSuccess: () => {},
