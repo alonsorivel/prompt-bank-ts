@@ -1,15 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { AddPromptType, PromptType } from "../types/prompt";
+import { PromptType } from "../types/prompt";
 import axios from "axios";
-
-type ThunkArg = PromptType | AddPromptType | null;
 
 const fetchPrompts = createAsyncThunk(
   "prompts/fetch",
-  async (arg: ThunkArg): Promise<PromptType[]> => {
+  async (): Promise<PromptType[]> => {
     const response = await axios.get("http://localhost:3005/prompts");
-
-    console.log(arg);
 
     // await pause(1000);
 

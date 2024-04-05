@@ -11,7 +11,7 @@ const ManagePrompts = () => {
   const { data } = useSelector((state: RootState) => state.prompts);
 
   useEffect(() => {
-    doFetchPrompts(null);
+    doFetchPrompts();
   }, [doFetchPrompts]);
 
   return (

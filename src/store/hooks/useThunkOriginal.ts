@@ -20,14 +20,16 @@ interface Error {
   message: string;
 }
 
-type ThunkArgs = PromptType | AddPromptType | void;
+type ThunkArgs = PromptType | AddPromptType | null;
 type ThunkReturn = PromptType | PromptType[];
-type ThunkFunction<T> = (arg?: T) => AsyncThunkAction<ThunkReturn, T, object>;
+type ThunkFunctionArg<T> = (
+  arg: T
+) => AsyncThunkAction<ThunkReturn, T, Record<string, never>>;
 
 export const useThunk = <T extends ThunkArgs>(
-  thunk: ThunkFunction<T>
+  thunk: ThunkFunctionArg<T>
 ): [
-  (arg?: T, events?: EventsModel) => void,
+  (arg: T, events?: EventsModel) => void,
   boolean,
   Error | boolean | null
 ] => {
@@ -36,7 +38,7 @@ export const useThunk = <T extends ThunkArgs>(
   const dispatch = useDispatch<AppDispatch>();
 
   const runThunk = useCallback(
-    (arg?: T, events: EventsModel = {}) => {
+    (arg: T, events: EventsModel = {}) => {
       console.log(arg);
 
       // Events model
@@ -49,12 +51,9 @@ export const useThunk = <T extends ThunkArgs>(
       // Update events
       const doEvent = { ...actualEvents, ...events };
 
-      // Check if thunk comes with arguments
-      const checkedThunk = arg === undefined ? thunk() : thunk(arg);
-
       setIsLoading(true);
       setError(null);
-      dispatch(checkedThunk)
+      dispatch(thunk(arg))
         .unwrap()
         .then(() => {
           setError(false);
