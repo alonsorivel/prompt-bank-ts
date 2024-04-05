@@ -4,10 +4,8 @@ import axios from "axios";
 
 const fetchPrompts = createAsyncThunk(
   "prompts/fetch",
-  async (arg: null): Promise<PromptType[]> => {
+  async (): Promise<PromptType[]> => {
     const response = await axios.get("http://localhost:3005/prompts");
-
-    console.log(arg);
 
     // await pause(1000);
 

@@ -20,14 +20,14 @@ interface Error {
   message: string;
 }
 
-type ThunkArgs = PromptType | AddPromptType | null | undefined;
+type ThunkArgs = PromptType | AddPromptType;
 type ThunkReturn = PromptType | PromptType[];
-type ThunkFunction<T> = (
+type ThunkFunctionArgs<T> = (
   arg: T
 ) => AsyncThunkAction<ThunkReturn, T, Record<string, never>>;
 
 export const useThunk = <T extends ThunkArgs>(
-  thunk: ThunkFunction<T>
+  thunk: ThunkFunctionArgs<T>
 ): [
   (arg: T, events?: EventsModel) => void,
   boolean,
