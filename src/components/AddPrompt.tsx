@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Card, Container, Form, Spinner } from "react-bootstrap";
-import { useThunk, addPrompt } from "../store";
+import { useThunk, addPrompt, ThunkFunction } from "../store";
+import { AddPromptType } from "../store/types/prompt";
 import ErrorModal from "./modals/ErrorModal";
 import "./AddPrompt.css";
 
@@ -52,7 +53,13 @@ const validationHandlers: ValidationHandler = {
 const AddPrompt = () => {
   const [fieldsState, setFieldsState] =
     useState<FieldsState>(initialFieldsState);
-  const [doAddPrompt, isLoading, error] = useThunk(addPrompt);
+
+  // Type assertion:
+  // useThunk knows thunk may or may not take an argument.
+  // TypeScript alerts when thunk takes an argument.
+  const [doAddPrompt, isLoading, error] = useThunk(
+    addPrompt as ThunkFunction<AddPromptType>
+  );
 
   const checkHandlers = (field: string, test: string) => {
     return validationHandlers[field]
@@ -116,10 +123,12 @@ const AddPrompt = () => {
 
   const handleSubmit = async () => {
     if (isFormValid()) {
-      doAddPrompt({
+      const payload: AddPromptType = {
         title: fieldsState.title.value,
         prompt: fieldsState.prompt.value
-      });
+      };
+
+      doAddPrompt(payload);
 
       resetForm();
     }

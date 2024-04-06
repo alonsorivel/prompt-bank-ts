@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Card, Form, Spinner } from "react-bootstrap";
-import { useThunk, updatePrompt } from "../store";
-import { PromptInStateType } from "../store/types/prompt";
+import { useThunk, updatePrompt, ThunkFunction } from "../store";
+import { PromptInStateType, PromptType } from "../store/types/prompt";
 import ErrorModal from "./modals/ErrorModal";
 
 interface FieldState {
@@ -57,7 +57,13 @@ const UpdatePrompt = ({ prompt, handleCancel }: UpdatePromptProps) => {
 
   const [fieldsState, setFieldsState] =
     useState<FieldsState>(initialFieldsState);
-  const [doUpdatePrompt, isLoading, error] = useThunk(updatePrompt);
+
+  // Type assertion:
+  // useThunk knows thunk may or may not take an argument.
+  // TypeScript alerts when thunk takes an argument.
+  const [doUpdatePrompt, isLoading, error] = useThunk(
+    updatePrompt as ThunkFunction<PromptType>
+  );
 
   const checkHandlers = (field: string, test: string) => {
     return validationHandlers[field]

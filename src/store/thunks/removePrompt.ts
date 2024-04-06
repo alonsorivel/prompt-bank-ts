@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Prompt } from "../types/prompt";
+import { PromptType } from "../types/prompt";
 import axios from "axios";
 
 const removePrompt = createAsyncThunk(
   "prompts/remove",
-  async (item: Prompt): Promise<Prompt> => {
+  async (item: PromptType): Promise<PromptType> => {
     await axios.delete(`http://localhost:3005/prompts/${item.id}`);
 
     //   await pause(1000);

@@ -9,7 +9,7 @@ function Header() {
         {/* Light background, responsive */}
         <Container>
           <Navbar.Brand as={NavLink} to="/">
-            Prompt Store
+            Prompt Store (TS)
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

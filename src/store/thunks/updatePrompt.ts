@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Prompt } from "../types/prompt";
+import { PromptType } from "../types/prompt";
 import axios from "axios";
 
 const updatePrompt = createAsyncThunk(
   "prompts/update",
-  async (item: Prompt): Promise<Prompt> => {
+  async (item: PromptType): Promise<PromptType> => {
     const updatedAt = Date.now();
 
     await axios.patch(`http://localhost:3005/prompts/${item.id}`, {

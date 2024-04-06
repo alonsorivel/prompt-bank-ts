@@ -1,9 +1,14 @@
 import { useState } from "react";
 import { Badge, Card, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { useThunk, removePrompt, setExpandedPrompt } from "../store";
+import {
+  useThunk,
+  removePrompt,
+  setExpandedPrompt,
+  ThunkFunction
+} from "../store";
 import UpdatePrompt from "./UpdatePrompt";
-import { PromptInStateType } from "../store/types/prompt";
+import { PromptInStateType, PromptType } from "../store/types/prompt";
 import ErrorModal from "./modals/ErrorModal";
 import { format } from "date-fns/format";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,7 +32,13 @@ const PromptItem = ({ prompt, last }: PromptItemProps) => {
   const dispatch = useDispatch();
 
   const [isUpdating, setIsUpdating] = useState(false);
-  const [doRemovePrompt, isLoading, error] = useThunk(removePrompt);
+
+  // Type assertion:
+  // useThunk knows thunk may or may not take an argument.
+  // TypeScript alerts when thunk takes an argument.
+  const [doRemovePrompt, isLoading, error] = useThunk(
+    removePrompt as ThunkFunction<PromptType>
+  );
 
   const isExpanded = prompt.expanded ? prompt.expanded : false;
 
